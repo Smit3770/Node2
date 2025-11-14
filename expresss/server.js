@@ -35,11 +35,26 @@ app.get("/delete",(req,res)=>{
     res.redirect("/")
 })
 
-app.get("/edit",(req,res)=>{
-    const id=Number(req.query.id)
-    const editdata=student.find((el)=>el.id===id)
-    res.render("edit",{editdata})
-})
+app.get("/Edit", (req, res) => {
+    const id = Number(req.query.id);
+
+    const editdata = student.find((el) => el.id === id);
+
+    res.render("edit", { editdata });
+});
+
+app.post("/editData", (req, res) => {
+    const { id, name } = req.body;
+
+    student = student.map((el) => {
+        if (el.id == id) {
+            el.name = name;
+        }
+        return el;
+    });
+
+    res.redirect("/");
+});
 
 app.listen(7800,()=>{
     console.log("server listen")
